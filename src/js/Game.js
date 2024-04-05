@@ -1,28 +1,6 @@
-//import Goblin from "./Goblin.js";
+import Goblin from "./Goblin.js";
 
-//export default
-
-import image from "../img/goblin.png";
-
-class Goblin {
-  constructor() {
-    this.element = document.createElement("img");
-    this.element.className = "goblin";
-    this.element.src = image;
-  }
-
-  moveGoblin(cells) {
-    let currentCell = null;
-    const index = Math.floor(Math.random() * cells.length);
-    const newCell = cells[index];
-    if (newCell !== currentCell) {
-      currentCell = newCell;
-      currentCell.appendChild(this.element);
-    }
-  }
-}
-
-class Game {
+export default class Game {
   constructor() {
     this.enemy = new Goblin();
     this.cells = document.querySelectorAll(".cell");
@@ -42,6 +20,7 @@ class Game {
         if (cell.contains(this.enemy.element)) {
           this.hits += 1;
           this.scoreHitsEl.textContent = this.hits;
+          this.enemy.moveGoblin(this.cells);
           this.checkMaxScore();
         } else {
           this.falses += 1;
@@ -58,14 +37,13 @@ class Game {
     const moveGoblinMethod = this.enemy.moveGoblin.bind(this.enemy, this.cells);
 
     if (this.falses >= 5) {
-      alert("Вы проиграли!" + this.falses);
+      alert("Вы проиграли!");
       this.cleanScore();
     } else if (this.hits >= 5) {
-      alert("Победа!" + this.hits);
+      alert("Победа!");
       this.cleanScore();
-    } else {
-      this.interval = setInterval(moveGoblinMethod, 1000);
     }
+    this.interval = setInterval(moveGoblinMethod, 1000);
   }
 
   cleanScore() {
@@ -75,7 +53,3 @@ class Game {
     this.scoreFalsesEl.textContent = 0;
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  const game = new Game();
-});
