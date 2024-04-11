@@ -1,0 +1,56 @@
+body {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.score {
+  width: 100%;
+  text-align: center;
+  margin: 30px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center; 
+  flex-wrap: nowrap;
+}
+
+.hits {
+  color: green;
+  font-weight: bold;
+  padding: 0 5px 0 5px;
+}
+
+.falses {
+  color: red;
+  font-weight: bold;
+  padding: 0 5px 0 5px;
+}
+
+.game-container {
+  border: 1px solid silver;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.cell {
+  border: 1px solid silver;
+  width: 25%;
+  height: 25%;
+  box-sizing: border-box;
+  position: relative;
+  padding: 7.5px 7.5px;
+}
+
+.goblin {
+  width: 85px;
+  height: 85px;
+}
+/* .cursor {
+  cursor: url("./img/SovietCursor.cur"), auto;
+} */
+
