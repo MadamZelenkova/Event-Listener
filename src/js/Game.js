@@ -2,13 +2,14 @@ import Goblin from "./Goblin.js";
 
 export default class Game {
   constructor() {
-    this.enemy = new Goblin();
+    this.scoreHitsEl = document.querySelector(".hits");
+    this.scoreFalsesEl = document.querySelector(".falses");
     this.cells = document.querySelectorAll(".cell");
+    this.enemy = new Goblin();
     this.falses = 0;
     this.hits = 0;
     this.interval = null;
-    this.scoreHitsEl = document.querySelector(".hits");
-    this.scoreFalsesEl = document.querySelector(".falses");
+    this.click = false;
 
     this.startGame();
   }
@@ -16,16 +17,10 @@ export default class Game {
   startGame() {
     this.cells.forEach((cell) => {
       cell.addEventListener("click", () => {
-        //cell.style.cursor = "url(../img/SovietCursor.cur), auto";
         if (cell.contains(this.enemy.element)) {
-          this.hits += 1;
-          this.scoreHitsEl.textContent = this.hits;
-          this.enemy.moveGoblin(this.cells);
-          this.checkMaxScore();
+          this.addPositiveScore();
         } else {
-          this.falses += 1;
-          this.scoreFalsesEl.textContent = "-" + this.falses;
-          this.checkMaxScore();
+          this.addNegativeScore();
         }
       });
     });
@@ -43,7 +38,26 @@ export default class Game {
       alert("Победа!");
       this.cleanScore();
     }
-    this.interval = setInterval(moveGoblinMethod, 1000);
+    this.interval = setInterval(() => {
+      moveGoblinMethod();
+      if (!this.click) {
+        this.addNegativeScore();
+      }
+    }, 1000);
+    this.click = false;
+  }
+
+  addPositiveScore() {
+    this.hits += 1;
+    this.scoreHitsEl.textContent = this.hits;
+    this.enemy.moveGoblin(this.cells);
+    this.checkMaxScore();
+  }
+
+  addNegativeScore() {
+    this.falses += 1;
+    this.scoreFalsesEl.textContent = "-" + this.falses;
+    this.checkMaxScore();
   }
 
   cleanScore() {
